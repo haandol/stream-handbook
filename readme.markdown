@@ -108,7 +108,7 @@ server.listen(8000);
 `.pipe()` 를 이용할 시의 이점은 또 있다.  
 느린 처리속도를 가진 클라이언트의 경우 백프레셔(backpressure)를 자동으로 처리해주어 node가 청크들을 과도하게 메모리 버퍼에 쌓아두지 않도록 해준다.
 
-응답을 압축하고 싶다고? 스트리밍 압축용 모듈을 이용하면 간단하다!
+응답을 압축하고 싶다고? 서드파티 모듈을 이용하면 간단하다!
 
 ``` js
 var http = require('http');
@@ -122,8 +122,7 @@ var server = http.createServer(function (req, res) {
 server.listen(8000);
 ```
 
-이제 우리는 gzip이나 deflate 형태로 압축된 응답을 브라우저에게 보낼 수 있다!  
-[oppressor](https://github.com/substack/oppressor) 를 통해 인코딩처리도 쉽게 할 수 있다.
+[oppressor](https://github.com/substack/oppressor) 를 통해 gzip이나 deflate 형태로 압축된 응답을 브라우저에게 보낼 수 있으며, 콘텐츠 인코딩처리도 쉽게 할 수 있다.
 
 한번 스트림 API를 배우고 나면 시시한 non-streaming 커스텀 API 를 통해 데이터를 보내는 대신 다양한 스트리밍 모듈들을 레고블럭이나 정원 호스처럼 이리저리 연결해가며 사용할 수 있다.
 

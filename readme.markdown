@@ -66,7 +66,8 @@ is the enemy and to seek the best abstractions for the problem at hand.
 
 # 왜 스트림을 사용해야 하는가
 
-node에서의 입출력은 비동기적이다. 따라서 디스크와 네트워크에 대한 상호작용은 콜백함수의 전달이 수반된다. 당신이 디스크에 있는 한 파일을 제공하는 서버를 코딩한다면 다음과 같이 하고 싶을지도 모르겠다:
+node에서의 입출력은 비동기적이다. 따라서 디스크와 네트워크에 대한 상호작용은 콜백함수의 전달이 수반된다.  
+당신이 디스크에 있는 한 파일을 제공하는 서버를 코딩한다면 다음과 같이 하고 싶을지도 모르겠다:
 
 ``` js
 var http = require('http');
@@ -80,11 +81,15 @@ var server = http.createServer(function (req, res) {
 server.listen(8000);
 ```
 
-위 코드는 잘 동작한다. 하지만 매 요청마다 `data.txt` 파일 전체를 메모리 버퍼에 올려야 하므로 효율적이지 않다. 만약 `data.txt`가 아주 크다면 이 프로그램은 아주 많은 메모리를 잡아먹게 될 것이며 동시에 이용하는 사용자가 늘어날수록, 특히 느린 처리속도를 가진 사용자가 늘어날수록 더욱 그럴 것이다.
+위 코드는 잘 동작한다. 하지만 매 요청마다 `data.txt` 파일 전체를 메모리 버퍼에 올려야 하므로 효율적이지 않다.   
+만약 `data.txt`가 아주 크다면 이 프로그램은 아주 많은 메모리를 잡아먹게 될 것이며   
+동시에 이용하는 사용자가 늘어날수록, 특히 느린 처리속도를 가진 사용자가 늘어날수록 더욱 그럴 것이다.
 
-뿐만아니라 사용자 경험도 형편없게 된다. 서버에서 파일 전체가 메모리 버퍼에 올라갈때까지 기다린뒤에야 사용자에게 전송이 시작되기 때문이다. 
+뿐만아니라 사용자 경험도 형편없게 된다.  
+서버에서 파일 전체가 메모리 버퍼에 올라갈때까지 기다린뒤에야 사용자에게 전송이 시작되기 때문이다. 
 
-다행스럽게도 `(req, res)` 매개변수들은 모두 스트림이다. 즉, `fs.readFile()` 대신 `fs.createReadStream()` 를 사용함으로써 훨씬 나은 코드를 작성할 수 있다:
+하지만 다행스럽게도 `(req, res)` 매개변수들은 모두 스트림이다.   
+즉, `fs.readFile()` 대신 `fs.createReadStream()` 를 사용함으로써 훨씬 나은 코드를 작성할 수 있다:
 
 ``` js
 var http = require('http');
@@ -100,7 +105,8 @@ server.listen(8000);
 `.pipe()` 함수는 `fs.createReadStream()` 에서 발생하는 `'data'` 와 `'end'` 이벤트들을 처리한다.
 이 코드는 더 깔끔할 뿐만 아니라 `data.txt` 파일을 디스크에서 읽을 때마다 한 청크(chunk)씩 클라이언트에게 즉시 보내줄 수 있다.
 
-`.pipe()` 를 이용할 시의 이점은 또 있다. 느린 처리속도를 가진 클라이언트의 경우 백프레셔(backpressure)를 자동으로 처리해주어 node가 청크들을 과도하게 메모리 버퍼에 쌓아두지 않도록 해준다.
+`.pipe()` 를 이용할 시의 이점은 또 있다.  
+느린 처리속도를 가진 클라이언트의 경우 백프레셔(backpressure)를 자동으로 처리해주어 node가 청크들을 과도하게 메모리 버퍼에 쌓아두지 않도록 해준다.
 
 응답을 압축하고 싶다고? 스트리밍 압축용 모듈을 이용하면 간단하다!
 
@@ -116,7 +122,8 @@ var server = http.createServer(function (req, res) {
 server.listen(8000);
 ```
 
-이제 우리는 gzip이나 deflate 형태로 압축된 응답을 브라우저에게 보낼 수 있다! [oppressor](https://github.com/substack/oppressor) 를 통해 인코딩처리도 쉽게 할 수 있다.
+이제 우리는 gzip이나 deflate 형태로 압축된 응답을 브라우저에게 보낼 수 있다!  
+[oppressor](https://github.com/substack/oppressor) 를 통해 인코딩처리도 쉽게 할 수 있다.
 
 한번 스트림 API를 배우고 나면 시시한 non-streaming 커스텀 API 를 통해 데이터를 보내는 대신 다양한 스트리밍 모듈들을 레고블럭이나 정원 호스처럼 이리저리 연결해가며 사용할 수 있다.
 
@@ -124,7 +131,8 @@ server.listen(8000);
 
 # 스트림 기본
 
-node에는 5가지 형태의 스트림들이 존재한다: 읽기가능(readable), 쓰기가능(writable), 변형(transform), 이중(duplex) 그리고 고전(classic)
+node에는 5가지 형태의 스트림들이 존재한다:  
+읽기가능(readable), 쓰기가능(writable), 변형(transform), 이중(duplex) 그리고 고전(classic)
 
 ## 파이프(pipe)
 

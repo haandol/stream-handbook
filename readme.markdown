@@ -165,8 +165,7 @@ shell 이 아니라 node 에서 할 수 있다는 점만 빼면 말이다!
 
 ## 읽기가능(readable) 스트림
 
-Readable streams produce data that can be fed into a writable, transform, or
-duplex stream by calling `.pipe()`:
+읽기 가능 스트림은 데이터를 생산한다. 이 데이터는 쓰기가능(writable), 변형(transform) 또는 이중(duplex) 스트림에서 `.pipe()` 호출을 통해 소비할 수 있다:
 
 ``` js
 readableStream.pipe(dst)

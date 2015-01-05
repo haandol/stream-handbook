@@ -173,7 +173,7 @@ readableStream.pipe(dst)
 
 ### 읽기가능 스트림 만들기
 
-Let's make a readable stream!
+그럼 읽기가능 스트림을 만들어보자!
 
 ``` js
 var Readable = require('stream').Readable;
@@ -191,19 +191,14 @@ $ node read0.js
 beep boop
 ```
 
-`rs.push(null)` tells the consumer that `rs` is done outputting data.
+`rs.push(null)` 는 소비자에게 `rs` 데이터 출력이 끝났다는 것을 말해준다.
 
-Note here that we pushed content to the readable stream `rs` before piping to
-`process.stdout`, but the complete message was still written.
+우리가 읽기가능 스트림 `rs`에 메시지를 푸시한 것은 소비자인 `process.output` 으로 파이핑하기 전이지만, 파이핑후 메시지가 잘 출력되는 것을 확인했다.
+이것은 스트림 버퍼 덕분이다. 우리가 읽기가능 스트림으로 메시지를 `.push()` 하면 푸시한 메시지 청크들은 소비자가 데이터를 읽기 전까지 버퍼에 저장된다.
 
-This is because when you `.push()` to a readable stream, the chunks you push are
-buffered until a consumer is ready to read them.
+모든 데이터를 버퍼에 쌓아두지 않아도 되고, 소비자가 요청하는 만큼의 데이터만 생성할 수 있다면 많은 경우 훨씬 유용하게 쓸 수 있다. 
 
-However, it would be even better in many circumstances if we could avoid
-buffering data altogether and only generate the data when the consumer asks for
-it.
-
-We can push chunks on-demand by defining a `._read` function:
+우리는 `._read` 함수를 정의해줌으로써 요청에 의해 청크를 푸시할 수 있다:
 
 ``` js
 var Readable = require('stream').Readable;

@@ -136,22 +136,20 @@ node에는 5가지 형태의 스트림들이 존재한다:
 
 ## 파이프(pipe)
 
-All the different types of streams use `.pipe()` to pair inputs with outputs.
+모든 스트림들은 입력과 출력을 짝지을 때 `.pipe()`를 사용한다.
 
-`.pipe()` is just a function that takes a readable source stream `src` and hooks
-the output to a destination writable stream `dst`:
+`.pipe()` 는 함수로써 읽기가능한 원본 스트림 `src` 의 출력을 가로채서 쓰기 가능한 대상 스트림 `dst` 로 보내준다:
 
 ```
 src.pipe(dst)
 ```
 
-`.pipe(dst)` returns `dst` so that you can chain together multiple `.pipe()`
-calls together:
+`.pipe(dst)` 는 `dst` 스트림을 리턴한다. 이로 인해 우리는 여러개의 `.pipe()` 를 체이닝해서 호출할 수 있다:
 
 ``` js
 a.pipe(b).pipe(c).pipe(d)
 ```
-which is the same as:
+위 코드는 아래와 동일하다:
 
 ``` js
 a.pipe(b);
@@ -159,14 +157,12 @@ b.pipe(c);
 c.pipe(d);
 ```
 
-This is very much like what you might do on the command-line to pipe programs
-together:
-
+이러한 방식은 커맨드라인 에서 여러 프로그램들을 파이핑할 수 있는 것과 매우 흡사하다:
 ```
 a | b | c | d
 ```
 
-except in node instead of the shell!
+shell 이 아니라 node 에서 할 수 있다는 점만 빼면 말이다!
 
 ## 읽기가능(readable) 스트림
 

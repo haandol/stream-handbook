@@ -1,24 +1,23 @@
-# stream-handbook
+# 스트림-핸드북
 
-This document covers the basics of how to write [node.js](http://nodejs.org/)
-programs with [streams](http://nodejs.org/docs/latest/api/stream.html).     
-You also could read a **[chinese edition](https://github.com/jabez128/stream-handbook)**
+이 문서는 how to write [node.js](http://nodejs.org/)
+programs with [streams](http://nodejs.org/docs/latest/api/stream.html) 의 내용을 담고 있다.  
+**[중국어 버전](https://github.com/jabez128/stream-handbook)** 도 제공되고 있다.
 
 [![cc-by-3.0](http://i.creativecommons.org/l/by/3.0/80x15.png)](http://creativecommons.org/licenses/by/3.0/)
 
-# node packaged manuscript
+# 핸드북을 node 패키지로 설치하기
 
-You can install this handbook with npm. Just do:
+이 핸드북은 npm을 이용한 아래 명령을 통해 설치할 수 있다.
 
 ```
 npm install -g stream-handbook
 ```
 
-Now you will have a `stream-handbook` command that will open this readme file in
-your `$PAGER`. Otherwise, you may continue reading this document as you are
-presently doing.
+`stream-handbook` 명령을 통해 이 README 파일의 내용을 확인할 수 있으며 `$PAGER` 프로그램들을 통해 읽을 수 있다.  
+현재 당신이 이 글을 읽고 있는 방식으로도 계속 읽을 수 있음은 물론이다.
 
-# introduction
+# 소개
 
 ```
 "We should have some ways of connecting programs like garden hose--screw in

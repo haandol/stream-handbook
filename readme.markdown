@@ -8,7 +8,7 @@ programs with [streams](http://nodejs.org/docs/latest/api/stream.html) 의 내�
 
 # 핸드북을 node 패키지로 설치하기
 
-이 핸드북은 npm을 이용한 아래 명령을 통해 설치할 수 있다.
+이 핸드북은 npm을 이용하여 설치할 수 있다.
 
 ```
 npm install -g stream-handbook
@@ -20,9 +20,7 @@ npm install -g stream-handbook
 # 소개
 
 ```
-"We should have some ways of connecting programs like garden hose--screw in
-another segment when it becomes necessary to massage data in
-another way. This is the way of IO also."
+"우리는 프로그램을 연결 할 수 있는 방법이 필요하다. 마치 정원에 있는 호스의 이음새처럼 한쪽의 데이터가 준비되었을때 다른쪽으로 데이터를 전달할 수 있도록 말이다. 이것은 일반적인 입출력의 방법이기도 하다."
 ```
 
 [Doug McIlroy. October 11, 1964](http://cm.bell-labs.com/who/dmr/mdmpipe.html)
@@ -64,7 +62,7 @@ is the enemy and to seek the best abstractions for the problem at hand.
 
 ***
 
-# why you should use streams
+# 왜 스트림을 사용해야 하는가
 
 I/O in node is asynchronous, so interacting with the disk and network involves
 passing callbacks to functions. You might be tempted to write code that serves
@@ -139,12 +137,12 @@ data through wonky non-streaming custom APIs.
 
 Streams make programming in node simple, elegant, and composable.
 
-# basics
+# 스트림 기본
 
 There are 5 kinds of streams: readable, writable, transform, duplex, and
 "classic".
 
-## pipe
+## 파이프(pipe)
 
 All the different types of streams use `.pipe()` to pair inputs with outputs.
 
@@ -178,7 +176,7 @@ a | b | c | d
 
 except in node instead of the shell!
 
-## readable streams
+## 읽기가능(readable) 스트림
 
 Readable streams produce data that can be fed into a writable, transform, or
 duplex stream by calling `.pipe()`:
@@ -187,7 +185,7 @@ duplex stream by calling `.pipe()`:
 readableStream.pipe(dst)
 ```
 
-### creating a readable stream
+### 읽기가능 스트림 만들기
 
 Let's make a readable stream!
 
@@ -299,7 +297,7 @@ If you want to create a readable stream that pushes arbitrary values instead of
 just strings and buffers, make sure to create your readable stream with
 `Readable({ objectMode: true })`.
 
-### consuming a readable stream
+### 읽기가능 스트림 소비하기
 
 Most of the time it's much easier to just pipe a readable stream into another
 kind of stream or a stream created with a module like
@@ -415,7 +413,7 @@ However, there are modules on npm such as
 [split](https://npmjs.org/package/split) that you should use instead of rolling
 your own line-parsing logic.
 
-## writable streams
+## 쓰기가능(writable) 스트림
 
 A writable stream is a stream you can `.pipe()` to but not from:
 
@@ -423,7 +421,7 @@ A writable stream is a stream you can `.pipe()` to but not from:
 src.pipe(writableStream)
 ```
 
-### creating a writable stream
+### 쓰기가능 스트림 만들기
 
 Just define a `._write(chunk, enc, next)` function and then you can pipe a
 readable stream in:
@@ -461,7 +459,7 @@ into `Buffer`s unless you create your writable stream with
 If the readable stream you're piping from writes objects, create your writable
 stream with `Writable({ objectMode: true })`.
 
-### writing to a writable stream
+### 쓰기가능 스트림에 쓰기
 
 To write to a writable stream, just call `.write(data)` with the `data` you want
 to write!
@@ -496,7 +494,7 @@ in the incoming buffer.
 
 If you want to wait for the buffer to empty again, listen for a `'drain'` event.
 
-## transform
+## 변형(transform) 스트림
 
 Transform streams are
 
@@ -505,7 +503,7 @@ You might also hear transform streams referred to as "through streams".
 Through streams are simple readable/writable filters that transform input and
 produce output.
 
-## duplex
+## 이중(duplex) 스트림
 
 Duplex streams are readable/writable and both ends of the stream engage
 in a two-way interaction, sending back and forth messages like a telephone. An
@@ -518,7 +516,7 @@ a.pipe(b).pipe(a)
 
 you're probably dealing with a duplex stream.
 
-## classic streams
+## 고전(classic) 스트림
 
 Classic streams are the old interface that first appeared in node 0.4.
 You will probably encounter this style of stream for a long time so it's good to
@@ -527,7 +525,7 @@ know how they work.
 Whenever a stream has a `"data"` listener registered, it switches into
 `"classic"` mode and behaves according to the old API.
 
-### classic readable streams
+### 고전 읽기가능 스트림
 
 Classic readable streams are just event emitters that emit `"data"` events when
 they have data for their consumers and emit `"end"` events when they are done
@@ -630,7 +628,7 @@ pausing a stream, but this was merely advisory. If you are going to use
 [through](https://npmjs.org/package/through) to handle buffering instead of
 writing that yourself.
 
-### classic writable streams
+### 고전 쓰기가능 스트림
 
 Classic writable streams are very simple. Just define `.write(buf)`, `.end(buf)`
 and `.destroy()`.
@@ -639,19 +637,16 @@ and `.destroy()`.
 to mean `stream.write(buf); stream.end()` and you shouldn't violate their
 expectations.
 
-## read more
+## 읽을 거리
 
-* [core stream documentation](http://nodejs.org/docs/latest/api/stream.html#stream_stream)
-* You can use the [readable-stream](https://npmjs.org/package/readable-stream)
-module to make your streams2 code compliant with node 0.8 and below. Just
-`require('readable-stream')` instead of `require('stream')` after you
-`npm install readable-stream`.
+* [주요 스트림 문서](http://nodejs.org/docs/latest/api/stream.html#stream_stream)
+* 우리는 [readable-stream](https://npmjs.org/package/readable-stream) 모듈을 통해 node 0.8 이하 버전에 대한 stream2 코드 호환을 지원할 수 있다. 단지 `npm install readable-stream` 로 설치한 뒤, `require('stream')` 대신 `require('readable-stream')` 를 사용하면 된다.
 
 ***
 
-# built-in streams
+# 내장(built-in) 스트림
 
-These streams are built into node itself.
+아래의 스트림들은 node 에 내장되어 있다.
 
 ## process
 
@@ -719,7 +714,7 @@ until the `'connect'` event fires.
 
 ***
 
-# control streams
+# 제어(control) 스트림들
 
 ## [through](https://github.com/dominictarr/through)
 
@@ -795,7 +790,7 @@ $ curl -X POST -d 'beep=boop&dinosaur=trex' http://localhost:5005
 
 ***
 
-# meta streams
+# 메타(meta) 스트림들
 
 ## [mux-demux](https://github.com/dominictarr/mux-demux)
 
@@ -805,7 +800,7 @@ $ curl -X POST -d 'beep=boop&dinosaur=trex' http://localhost:5005
 
 ***
 
-# state streams
+# 상태(state) 스트림들
 
 ## [crdt](https://github.com/dominictarr/crdt)
 
@@ -1023,7 +1018,7 @@ incrementally as it arrives.
 
 ***
 
-# browser streams
+# 브라우저(browser) 스트림들
 
 ## [shoe](https://github.com/substack/shoe)
 
@@ -1041,16 +1036,16 @@ incrementally as it arrives.
 
 ***
 
-# html streams
+# html 스트림들
 
 ## [hyperstream](https://github.com/substack/hyperstream)
 
 
-# audio streams
+# 오디오(audio) 스트림들
 
 ## [baudio](https://github.com/substack/baudio)
 
-# rpc streams
+# rpc 스트림들
 
 ## [dnode](https://github.com/substack/dnode)
 
